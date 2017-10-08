@@ -31,6 +31,7 @@ add_action( 'wpcf7_mail_sent', function() {
 
 function __cf7_shortcode( $atts, $content = null, $code = '' ) {
 	add_filter( 'wpcf7_form_hidden_fields', function() use ( $atts ) {
+		// It will be escaped in the contact-form-7. :)
 		return array( '__goto' => $atts['goto'] );
 	} );
 	return wpcf7_contact_form_tag_func( $atts, $content, $code );
