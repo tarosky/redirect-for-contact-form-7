@@ -22,8 +22,8 @@ cache:
 
 env:
   matrix:
-    - WP_VERSION=latest WP_MULTISITE=0 CF7=https://downloads.wordpress.org/plugin/contact-form-7.4.9.zip
-    - WP_VERSION=nightly WP_MULTISITE=0 CF7=https://downloads.wordpress.org/plugin/contact-form-7.4.9.zip
+    - WP_VERSION=latest WP_MULTISITE=0 CF7=$(curl https://api.wordpress.org/plugins/info/1.0/contact-form-7.json | jq -r .download_link)
+    - WP_VERSION=nightly WP_MULTISITE=0 CF7=$(curl https://api.wordpress.org/plugins/info/1.0/contact-form-7.json | jq -r .download_link)
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
