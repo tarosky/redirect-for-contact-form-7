@@ -1,15 +1,13 @@
 <?php
 /**
- * Plugin Name:     Cf7 Thanks
- * Plugin URI:      https://github.com/tarosky/wpcf7-thanks-addon
+ * Plugin Name:     redirect-for-contact-form-7
+ * Plugin URI:      https://github.com/tarosky/redirect-for-contact-form-7
  * Description:     An add-on plugin for the Contact Form 7 which redirects to the specific page.
  * Author:          Takayuki Miyauchi
  * Author URI:      https://tarosky.co.jp/
- * Text Domain:     cf7-thanks
- * Domain Path:     /languages
  * Version:         0.1.0
  *
- * @package         Cf7_Thanks
+ * @package         redirect_for_contact_form_7
  */
 
 add_action( 'plugins_loaded', function() {

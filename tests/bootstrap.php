@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Cf7_Thanks
+ * @package redirect_for_contact_form_7
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
