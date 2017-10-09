@@ -35,4 +35,8 @@ $ bash bin/install-plugin.sh
 $ phpunit
 ```
 
-If you want to run tests with the specific version of the Contact Form 7, please edit `.travis.yml`.
+If you want to run tests with the specific version of the Contact Form 7, please change the value of `$CF7`.
+
+Also, if you want to check the compatibility with the latest version of Contact Form 7, please click "Restart build" on the Travis CI.
+
+![](https://www.evernote.com/l/ABWENY2VA8pHPoVbrQVU78GlRO_svHqSMCsB/image.png)
