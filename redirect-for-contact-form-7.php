@@ -10,6 +10,20 @@
  * @package         redirect_for_contact_form_7
  */
 
+// Autoload
+require_once( dirname( __FILE__ ) . '/vendor/autoload.php' );
+
+add_action( 'init', 'activate_autoupdate' );
+
+function activate_autoupdate() {
+	$plugin_slug = plugin_basename( __FILE__ ); // e.g. `hello/hello.php`.
+	$gh_user = 'tarosky';                      // The user name of GitHub.
+	$gh_repo = 'redirect-for-contact-form-7';       // The repository name of your plugin.
+
+	// Activate automatic update.
+	new Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
+}
+
 add_action( 'plugins_loaded', function() {
 	add_filter( 'wpcf7_load_js', '__return_false' );
 } );

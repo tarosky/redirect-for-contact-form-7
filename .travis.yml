@@ -1,50 +1,42 @@
 sudo: false
-
 language: php
-
 php:
-    - 5.6
-    - 7.0
-
+- 5.6
+- 7.0
 notifications:
   email:
     on_success: never
     on_failure: change
-
 branches:
   only:
-    - master
-
+  - master
 cache:
   directories:
-    - vendor
-    - $HOME/.composer/cache
-
+  - vendor
+  - "$HOME/.composer/cache"
 env:
   matrix:
-    - WP_VERSION=latest WP_MULTISITE=0 CF7=https://downloads.wordpress.org/plugin/contact-form-7.4.9.zip
-    - WP_VERSION=nightly WP_MULTISITE=0 CF7=https://downloads.wordpress.org/plugin/contact-form-7.4.9.zip
-    - WP_VERSION=latest WP_MULTISITE=0 CF7=$(curl https://api.wordpress.org/plugins/info/1.0/contact-form-7.json | jq -r .download_link)
-    - WP_VERSION=nightly WP_MULTISITE=0 CF7=$(curl https://api.wordpress.org/plugins/info/1.0/contact-form-7.json | jq -r .download_link)
-
+  - WP_VERSION=latest WP_MULTISITE=0 CF7=https://downloads.wordpress.org/plugin/contact-form-7.4.9.zip
+  - WP_VERSION=nightly WP_MULTISITE=0 CF7=https://downloads.wordpress.org/plugin/contact-form-7.4.9.zip
+  - WP_VERSION=latest WP_MULTISITE=0 CF7=$(curl https://api.wordpress.org/plugins/info/1.0/contact-form-7.json
+    | jq -r .download_link)
+  - WP_VERSION=nightly WP_MULTISITE=0 CF7=$(curl https://api.wordpress.org/plugins/info/1.0/contact-form-7.json
+    | jq -r .download_link)
 before_script:
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - |
-    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-      phpenv config-rm xdebug.ini
-    else
-      echo "xdebug.ini does not exist"
-    fi
-  - |
-    if [[ ! -z "$WP_VERSION" ]] ; then
-      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      bash bin/install-plugin.sh
-      if [[ ${TRAVIS_PHP_VERSION:0:2} == "5." ]]; then
-        composer global require "phpunit/phpunit=4.8.*"
-      else
-        composer global require "phpunit/phpunit=5.7.*"
-      fi
-    fi
-
+- bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+- bash bin/install-plugin.sh
+- composer install
 script:
-  - phpunit
+- phpunit
+after_success:
+- sed -i -e "s/nightly/${TRAVIS_TAG}/" self-hosted-wordpress-plugin-on-github.php
+- curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: NSKA3o/ucd+G0Y4W4imyrqv81/sznczCyTcId9MFERRQXMGlQ6jMS+h0oPfT5eVOu+vFr2PpJ6qW88Y8fhXEPiiwR8DNQ/tsknHrqG+fKg4V0jDWeKkJDCEyIts5kWQUamIF0K0u52K4X5N8GhVTqSLegqfX0VzfK+bUGu6O+g8AVhEf0nF9ddf6Aut6LB47affAom8GmoHWDa0S/9cw9h0CisQqV94/m+r0SLY9vcqOAR/2RXzZUlUO41dB3YrO2uKdrO4KTnUZ12uAz0wHclx+VXdakYGkqsIsVh50LDSPqPvkYCgggAfhai63jPz3zai/YMa9QMc7c7Voe2VIPgx5mtyQtKmehLn/11gxi3RT78QpBQJa6aP0K8ZNJpGfks2CESbKzvAYsPUSKQajG/gI8apiZEQWc6NIqFuLXb3gaeKJZYmrXsxh9tXNPlzNAbKueQaJn8YXU0Gc0o09zgrkunwVeRHYlumQqjrK6lQOtQe4K6akZp8qD2zBag9f2y0pye1IQ2p7/ajJ17xB4d6kNQVVg5l1Xv0KGXJ/v+lLhUWMHKwx0yRoDA+KW6TJx9JDkYHbe65v+Ozu5wi9AmMbgH884jD3otfyI7Kr+bnKURuYOpl1vkuq7VnpXlUTGnixf5gvSH0CK2KfDDXDsseE3T230SBQ3jI0pgRhhq8=
+  file: redirect-for-contact-form-7.zip
+  on:
+    tags: true
+    repo: tarosky/redirect-for-contact-form-7
