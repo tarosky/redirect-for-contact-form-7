@@ -125,7 +125,3 @@ install_db() {
 install_wp
 install_test_suite
 install_db
-
-download $CF7 cf7.zip
-unzip cf7.zip -d .lib
-rm -f cf7.zip

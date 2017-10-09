@@ -24,15 +24,21 @@ add_action( 'plugins_loaded', function() {
 
 add_action( 'wpcf7_mail_sent', function() {
 	if ( ! empty( $_POST['__goto'] ) ) {
-		wp_redirect( esc_url_raw( $_POST['__goto'], array( 'http', 'https' ) ), 302 );
-		exit;
+		$url = $_POST['__goto'];
+	} else {
+		$url = apply_filters( 'redirect_for_contact_form_7_default_url', '' );
+	}
+	if ( ! empty( $url ) ) {
+		wp_safe_redirect( esc_url_raw( $url, array( 'http', 'https' ) ), 302 );
 	}
 } );
 
 function __cf7_shortcode( $atts, $content = null, $code = '' ) {
 	add_filter( 'wpcf7_form_hidden_fields', function() use ( $atts ) {
 		// It will be escaped in the contact-form-7. :)
-		return array( '__goto' => $atts['goto'] );
+		if ( ! empty( $atts['goto'] ) ) {
+			return array( '__goto' => $atts['goto'] );
+		}
 	} );
 	return wpcf7_contact_form_tag_func( $atts, $content, $code );
 }
