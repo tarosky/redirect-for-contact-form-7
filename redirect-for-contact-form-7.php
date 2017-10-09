@@ -5,7 +5,7 @@
  * Description:     An add-on plugin for the Contact Form 7 which redirects to the specific page.
  * Author:          Takayuki Miyauchi
  * Author URI:      https://tarosky.co.jp/
- * Version:         0.1.0
+ * Version:         nightly
  *
  * @package         redirect_for_contact_form_7
  */
