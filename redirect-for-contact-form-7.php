@@ -24,18 +24,14 @@ function activate_autoupdate() {
 	new Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
 }
 
-add_action( 'plugins_loaded', function() {
-	add_filter( 'wpcf7_load_js', '__return_false' );
-} );
+/**
+ * Disable the JavaScript for the Contact Form 7.
+ */
+add_filter( 'wpcf7_load_js', '__return_false' );
 
-add_action( 'plugins_loaded', function() {
-	remove_shortcode( 'contact-form-7' );
-	remove_shortcode( 'contact-form' );
-
-	add_shortcode( 'contact-form-7', '__cf7_shortcode' );
-	add_shortcode( 'contact-form', '__cf7_shortcode' );
-}, 11 );
-
+/**
+ * Redirect to the specific URL after mail sent.
+ */
 add_action( 'wpcf7_mail_sent', function() {
 	if ( ! empty( $_POST['__goto'] ) ) {
 		$url = $_POST['__goto'];
@@ -48,6 +44,20 @@ add_action( 'wpcf7_mail_sent', function() {
 	}
 } );
 
+/**
+ * Remove and re-add shortcode for the Contact Form 7.
+ */
+add_action( 'plugins_loaded', function() {
+	remove_shortcode( 'contact-form-7' );
+	remove_shortcode( 'contact-form' );
+
+	add_shortcode( 'contact-form-7', '__cf7_shortcode' );
+	add_shortcode( 'contact-form', '__cf7_shortcode' );
+}, 11 );
+
+/**
+ * The callback function for the shortcode which adds `__goto` attribute.
+ */
 function __cf7_shortcode( $atts, $content = null, $code = '' ) {
 	add_filter( 'wpcf7_form_hidden_fields', function() use ( $atts ) {
 		// It will be escaped in the contact-form-7. :)
