@@ -30,7 +30,7 @@ function activate_autoupdate() {
 add_filter( 'wpcf7_load_js', '__return_false' );
 
 /**
- * Redirect to the specific URL after mail sent.
+ * Redirect to the specific URL after CF7 sent message.
  */
 add_action( 'wpcf7_mail_sent', function() {
 	if ( ! empty( $_POST['__goto'] ) ) {
