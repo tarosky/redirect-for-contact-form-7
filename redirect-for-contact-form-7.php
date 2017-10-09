@@ -30,6 +30,7 @@ add_action( 'wpcf7_mail_sent', function() {
 	}
 	if ( ! empty( $url ) ) {
 		wp_safe_redirect( esc_url_raw( $url, array( 'http', 'https' ) ), 302 );
+		exit;
 	}
 } );
 
