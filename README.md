@@ -4,11 +4,13 @@
 
 An add-on plugin for the Contact Form 7 which redirect to the specific URL.
 
+[Download](https://github.com/tarosky/redirect-for-contact-form-7/releases)
+
 ## Requires
 
 * WordPress 4.8 or later
 * Contact Form 7 4.9 or later
-* PHP 5.3 or later
+* PHP 7.0 or later
 
 ## Usage
 
