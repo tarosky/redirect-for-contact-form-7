@@ -38,3 +38,14 @@ $ phpunit
 ```
 
 If you want to run tests with the specific version of the Contact Form 7, please change the value of `$WP_PLUGIN`.
+
+## How to release new version
+
+If you push a tag, new version will be released automatically by Travis CI.
+
+```
+$ git tag x.x.x
+$ git push origin master
+```
+
+See releases. https://github.com/tarosky/redirect-for-contact-form-7/releases
