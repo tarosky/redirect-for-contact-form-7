@@ -7,6 +7,10 @@ notifications:
   email:
     on_success: never
     on_failure: change
+branches:
+  only:
+  - master
+  - "/^v?[0-9\\.]+/"
 cache:
   directories:
   - vendor

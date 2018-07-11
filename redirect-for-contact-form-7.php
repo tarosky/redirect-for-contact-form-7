@@ -32,7 +32,7 @@ add_filter( 'wpcf7_load_js', '__return_false' );
 /**
  * Redirect to the specific URL after CF7 sent message.
  */
-add_action( 'wpcf7_mail_sent', function() {
+add_action( 'wpcf7_submit', function() {
 	if ( ! empty( $_POST['__goto'] ) ) {
 		$url = $_POST['__goto'];
 	} else {
@@ -42,7 +42,7 @@ add_action( 'wpcf7_mail_sent', function() {
 		wp_safe_redirect( esc_url_raw( $url, array( 'http', 'https' ) ), 302 );
 		exit;
 	}
-} );
+}, 9999 );
 
 /**
  * Remove and re-add shortcode for the Contact Form 7.
