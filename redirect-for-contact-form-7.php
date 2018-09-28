@@ -32,17 +32,18 @@ add_filter( 'wpcf7_load_js', '__return_false' );
 /**
  * Redirect to the specific URL after CF7 sent message.
  */
-add_action( 'wpcf7_submit', function() {
+add_action( 'wpcf7_submit', function( $cf7, $result ) {
 	if ( ! empty( $_POST['__goto'] ) ) {
 		$url = $_POST['__goto'];
 	} else {
 		$url = apply_filters( 'redirect_for_contact_form_7_default_url', '' );
 	}
-	if ( ! empty( $url ) ) {
+
+	if ( 'mail_sent' === $result['status'] && ! empty( $url ) ) {
 		wp_safe_redirect( esc_url_raw( $url, array( 'http', 'https' ) ), 302 );
 		exit;
 	}
-}, 9999 );
+}, 9999, 2 );
 
 /**
  * Remove and re-add shortcode for the Contact Form 7.
