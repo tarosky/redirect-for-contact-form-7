@@ -9,7 +9,7 @@ An add-on plugin for the Contact Form 7 which redirect to the specific URL.
 ## Requires
 
 * WordPress 4.8 or later
-* Contact Form 7 4.9 or later
+* Contact Form 7 5.0 or later
 * PHP 7.0 or later
 
 ## Usage
