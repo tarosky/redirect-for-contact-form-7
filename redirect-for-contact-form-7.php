@@ -60,11 +60,14 @@ add_action( 'plugins_loaded', function() {
  * The callback function for the shortcode which adds `__goto` attribute.
  */
 function __cf7_shortcode( $atts, $content = null, $code = '' ) {
-	add_filter( 'wpcf7_form_hidden_fields', function() use ( $atts ) {
+	add_filter( 'wpcf7_form_hidden_fields', function( $fields ) use ( $atts ) {
 		// It will be escaped in the contact-form-7. :)
 		if ( ! empty( $atts['goto'] ) ) {
-			return array( '__goto' => $atts['goto'] );
+			$fields['__goto'] = $atts['goto'];
 		}
+
+		return $fields;
 	} );
+
 	return wpcf7_contact_form_tag_func( $atts, $content, $code );
 }
